@@ -1,0 +1,255 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}Welcome to OnePlace{% endblock %}
+{% block body %}
+ 
+<div class = "card-deck chartdeck" >
+    <div class = "col-md-6">
+        <div class="card cardchart">
+          <div class="card-header">
+            Student Enrollment
+          </div>
+          <div class="card-block">
+              <div id="totalStudent" style="width:100%; height:400px;"></div>   
+            <a href="{% url 'oneplace:chart_total_student' %}" class="btn btn-primary">Full View</a>
+          </div>
+        </div>
+    </div>
+    <div class = "col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Monthly Breakdown
+          </div>
+          <div class="card-block">
+             <div id="classPerMonth" style="width:100%; height:400px;"></div>   
+            <a href="{% url 'oneplace:chart_class_per_month' %}" class="btn btn-primary">Full View</a>
+          </div>
+        </div>
+    </div>
+    <div class = "col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Capacity
+          </div>
+          <div class="card-block">
+            
+               <div id="capacity" style="width:100%; height:400px;"></div>
+            <a href="{% url 'oneplace:chart_capacity' %}" class="btn btn-primary">Full View</a>
+          </div>
+        </div>
+    </div>
+     <div class = "col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Levels
+          </div>
+          <div class="card-block"> 
+            <div id="level" style="width:100%; height:400px;"></div>   
+            <a href="{% url 'oneplace:chart_level' %}" class="btn btn-primary">Full View</a>
+          </div>
+        </div>
+    </div>
+</div>
+{% load staticfiles %}
+
+
+<script src="{% static 'oneplace/highchart5.0.7/highcharts.js' %}"></script>
+<script type="text/javascript">
+$(function () {
+    Highcharts.chart('totalStudent', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Total # Students in Each Class'
+        },
+        xAxis: {
+            categories: [
+            {% for lessonName in lessonName %}
+                '{{ lessonName }}',
+            {% endfor %}    
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total Students'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.f}</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Class Name',
+            data: [
+            {% for lessonStudentCount  in lessonStudentCount %}
+            {{ lessonStudentCount }},
+            {% endfor %} ]
+
+        }, ]
+    });
+});
+        </script>
+
+        <script type="text/javascript">
+$(function () {
+    Highcharts.chart('classPerMonth', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Total Classes Each Month'
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Total # of Classes'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Number of Classes Offered',
+            data: [{% for lessonTotalMonth in lessonTotalMonth %} {{lessonTotalMonth}}, {% endfor %}]
+        }]
+    });
+});
+        </script>
+<script>
+Highcharts.chart('capacity', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Capacity Remaining For Each Class'
+    },
+    xAxis: {
+        categories: [
+            {% for lessonName in lessonName %}
+                '{{ lessonName }}',
+            {% endfor %}
+        ]
+    },
+    yAxis: [{
+        min: 0,
+        title: {
+            text: 'Total Capacity to Enrolled Students'
+        }
+    }, {
+        title: {
+            text: ''
+        },
+        opposite: true
+    }],
+    legend: {
+        shadow: false
+    },
+    tooltip: {
+        shared: true
+    },
+    plotOptions: {
+        column: {
+            grouping: false,
+            shadow: false,
+            borderWidth: 0
+        }
+    },
+    series: [ {
+        name: 'Class Capacity',
+        color: 'rgba(248,161,63,1)',
+        data: [{% for lessonMaxEnrollment in lessonMaxEnrollment %}
+                  {{ lessonMaxEnrollment }},
+               {% endfor %}],
+        pointPadding: 0.3,
+        pointPlacement: 0.2,
+        yAxis: 1
+    }, {
+        name: '# of students Enrolled',
+        color: 'rgba(186,60,61,.9)',
+        data: [{% for lessonStudentCount  in lessonStudentCount %}
+            {{ lessonStudentCount }},
+            {% endfor %}],
+        pointPadding: 0.4,
+        pointPlacement: 0.2,
+        yAxis: 1
+    }]
+});
+
+</script>
+    <script type="text/javascript">
+$(function () {
+
+    // Radialize the colors
+    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+        return {
+            radialGradient: {
+                cx: 0.5,
+                cy: 0.3,
+                r: 0.7
+            },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+
+    // Build the chart
+    Highcharts.chart('level', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Class Count by Level'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: ' <b>{point.name}</b>:<b> Total: {point.y:.f} <br> </b> Percent:  {point.percentage:.1f} % ',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'percentage by level',
+            data: [
+            {% for levelCount in levelCount %}
+                { name: '{{ levelCount.level__level_name }}', y: {{ levelCount.levelcount }} },
+            {% endfor %}
+            ]
+        }]
+    });
+});
+        </script>
+{% endblock %}

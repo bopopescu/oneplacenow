@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+{% load staticfiles %}
+
+<link href="{% static 'oneplace/fullcalendar3.2/fullcalendar.min.css' %}" rel='stylesheet' />
+
+<link href="{% static 'oneplace/fullcalendar3.2/fullcalendar.print.min.css' %}"  rel='stylesheet' media='print' />
+
+<!-- Local Style Sheet-->
+<link rel="stylesheet" type="text/css" href="{% static 'oneplace/style.css' %}" />
+
+<!--Bootstrap-->
+<link href="{% static 'oneplace/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!--Google Fonts-->
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Satify">
+</head>
+<body id=calendarbody>
+<!--Nav Bar Begins -->
+ <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse mb-4">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{% url  'oneplace:index' %}">OnePlace</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url  'oneplace:index' %}">Home<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url  'oneplace:lesson' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">Classes</a>
+             <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url  'oneplace:lesson' %}">All Classes</a>
+              <a class="dropdown-item" href="{% url  'oneplace:calendar' %}">Calendar</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{% url  'oneplace:student' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"> Students</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url  'oneplace:student' %}">Students</a>
+              <a class="dropdown-item" href="{% url  'oneplace:student_enroll' %}">Enroll a Student</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{% url  'oneplace:instructor' %}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"> Instructors</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url  'oneplace:instructor' %}">Instructors</a>
+              <a class="dropdown-item" href="{% url  'oneplace:instructor_assign' %}">Enroll a Instructor</a>
+            </div>
+          </li> 
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+         <li class="nav-item">
+            <form class="form-inline mt-2 mt-md-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">Welcome {{ request.user.username }}</a>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link" href="{% url  'oneplace:log_out' %}">Log Out</a>
+           </li>
+          {% else %}
+          <li class="nav-item">  
+            <a class="nav-link" href="{% url  'oneplace:register' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url  'oneplace:login' %}">Login</a>
+          </li>
+          {% endif %}   
+        </ul> 
+      </div>
+  </nav>
+<!--Nav Bar Ends -->
+
+<div class = "container-fluid">
+	<div class="card col-md-10 offset-md-1">
+		<div id='calendar'></div>
+	</div>
+</div>
+<!--footer Begins -->
+<footer class="blog-footer">
+      <p class = "lead">For more information Contact qtech411@gmail.com
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+</footer>
+<!--footer Ends -->
+<script src="{% static 'oneplace/fullcalendar3.2/moment.min.js' %}"></script>
+<script src="{% static 'oneplace/fullcalendar3.2/jquery.min.js' %}"></script>
+<script src="{% static 'oneplace/fullcalendar3.2/fullcalendar.min.js' %}"></script>
+<script>
+	$(document).ready(function() {
+		$('#calendar').fullCalendar({
+			
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay,listMonth'
+			},
+
+			defaultDate: '{{ now }}',
+			navLinks: true, // can click day/week names to navigate views
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+			events: [
+			{% for calvalue in calendarInfo %}
+				{
+					title: '{{ calvalue.title }}',
+				    url: '{% url 'oneplace:class_enrollment' calvalue.id %}',
+					start: '{{ calvalue.start }}',
+					end:   '{{ calvalue.end }}'
+    
+				},
+			{% endfor %}
+			]
+		});
+		
+	});
+</script>
+
+<!--prereqs-->
+<!-- Bootstrap Javascript JQuery CDN -->
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+ <script src="{% static 'oneplace/js/bootstrap.min.js' %}"></script>
+ 
+</body>
+</html>
+

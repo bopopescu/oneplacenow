@@ -1,0 +1,177 @@
+body{
+    background: white url("images/background.png");
+    padding-top: 70px; 
+}
+
+.jumbotron {
+  padding: 200px 15px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #f9f9f9;
+  text-align: center;
+  background-size: cover;
+  color: white;
+  background-image: url("images/laptop.jpg")
+}
+
+.tsquare {
+  background-color: rgba(255,255,255, 0.7);
+  color: black;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif
+}
+
+.cardspec {
+ overflow: hidden;
+ box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+ -webkit-transition: .25s box-shadow;
+ transition: .25s box-shadow;
+ margin-bottom: .25rem;
+ padding: 1.3rem
+}
+.card:focus, .card:hover {
+ box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+
+.cardspec-inverse .cardspec-img-overlay {
+ background-color: rgba(51, 51, 51, 0.85);
+ border-color: rgba(51, 51, 51, 0.85);
+}
+
+.cardspec .card-block {
+  max-height:20rem;
+  min-height: 20rem;
+  overflow:auto;
+  background: #D3D3D3
+}
+
+.blog-footer {
+  padding: 2.5rem 0;
+  color: #999;
+  text-align: center;
+  background-color: rgba(51, 51, 51, 0.95);
+  border-top: .05rem solid #e5e5e5;
+}
+
+.cont_pad
+{
+padding: 1rem;
+}
+
+.classbtnadd
+{
+    margin-left: 1rem;
+}
+
+#btnupdate
+{
+  
+  float: right;
+  margin-bottom: .2rem;
+}
+
+#btndelete
+{
+  float: right;
+  margin-bottom: .2rem;
+}
+.carddown
+{
+  margin-bottom: 1rem;
+}
+
+.cardspec .card-header{
+  min-height: 5.8rem;
+}
+
+.card-header h5{
+  font-weight: bold;
+  text-align: center;
+}
+
+.formt{
+  margin-right: 4rem;
+}
+
+.cardsecond
+{
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+
+.rightupdate
+{
+  float: right;
+  margin-top:.4rem;
+  
+  margin-bottom:.4rem;
+}
+.rightdelete{
+  
+}
+
+.cardmain{
+  margin-bottom:1rem;
+}
+
+#calendar {
+  padding: 6rem;
+  margin: 0 auto;
+  }
+
+
+#calendarbody {
+    margin-top: 5rem;
+    
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    
+  }
+
+
+#calendarbody .card{
+  margin-bottom: 2.5rem;
+}
+
+.chartdeck .card{
+  margin-bottom: 2.5rem;
+
+
+}
+.chartdeck h4{
+  text-align: center;
+
+}
+
+.cardchart {
+  
+  min-width:  20rem;
+  overflow:auto;
+}
+
+
+.lessontable{
+  margin-top: 1rem;
+  margin-bottom: 1rem; 
+}
+
+.nicehover:hover 
+{ 
+  cursor: pointer; cursor: hand;
+  background-color: #DDDDDD; 
+}
+
+.studentbtnadd
+{
+ 
+  margin-bottom: .2rem
+}
+
+.importbtn
+{
+  display: inline-block;
+  float: right;
+  
+}
+

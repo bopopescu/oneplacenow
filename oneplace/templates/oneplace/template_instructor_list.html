@@ -1,0 +1,41 @@
+<table class = " table table-responsive table-striped">
+  <thead>
+    <tr>
+      <th>Profile Pic</th>
+      <th>Instructor First Name</th>
+      <th>Instructor Last Name</th>
+      <th>Address</th>
+      <th>Zip Code</th>
+      <th>State</th>
+      <th>City</th>
+      <th></th>
+      <th></th>
+    </tr>
+  <thead>
+<tbody>
+<tr>
+   {% for instrvalue in instructor_Info %}
+  <tr>
+    <td><img src="{{ instrvalue.instructor_picture.url }}" class="img-responsive" width="100" height="100"></td>
+    <td>{{ instrvalue.first_name }}</td>
+    <td>{{ instrvalue.last_name }}</td>
+    <td>{{ instrvalue.address }}</td>
+    <td>{{ instrvalue.zip_code }}</td>
+    <td>{{ instrvalue.state }}</td>
+    <td>{{ instrvalue.city }}</td>
+     <td>      
+        <form action="{% url 'oneplace:instructor_update' instrvalue.id %}">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-info btn-sm">Update</button>
+        </form>
+      </td>
+      <td> 
+        <form action="{% url 'oneplace:instructor_delete' instrvalue.id %}" method="post">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-danger btn-sm">Delete</button>  
+        </form>
+      </td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>

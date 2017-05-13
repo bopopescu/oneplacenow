@@ -1,0 +1,73 @@
+
+{% extends 'oneplace/base.html' %}
+{% block title %}All Students{% endblock %}
+{% block body %}
+<div class = "container-fluid">
+
+
+<div class="row">
+  <div class = "col-md-12">
+    <div class="card cardmain">
+     <div class="card-header">
+              <h5 class ="col-lg-10">Students</h5>
+        </div>
+          <div class="card-block">
+            <h4>Total Students: {{ studentCount }}</h4>
+      <!-- Start Table -->
+      <div class = "offset-md-1 col-md-10" >
+      <a href="{% url 'oneplace:student_add' %}" class="btn btn-primary btn active studentbtnadd">Add Student</a>
+            <table class = "table table-responsive table-striped " id ="tablesort">
+              <thead>
+                <tr>
+                  <th onclick="sortTable(0)" class="nicehover">Profile Pic</th>
+                  <th onclick="sortTable(1)" class="nicehover">Student First Name</th>
+                  <th onclick="sortTable(2)" class="nicehover">Student Last Name</th>
+                  <th onclick="sortTable(3)" class="nicehover">Address</th>
+                  <th onclick="sortTable(4)" class="nicehover">Zip Code</th>
+                  <th onclick="sortTable(5)" class="nicehover">State</th>
+                  <th onclick="sortTable(6)" class="nicehover">City</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              <thead>
+            <tbody>
+
+               {% for sdtvalue in student_Info %}
+              <tr>
+                <td scope="row"><img src="{{ sdtvalue.student_picture.url }}" class="img-responsive" width="75" height="75"></td>
+                <td>{{ sdtvalue.first_name }}</td>
+                <td>{{ sdtvalue.last_name }}</td>
+                <td>{{ sdtvalue.address }}</td>
+                <td>{{ sdtvalue.zip_code }}</td>
+                <td>{{ sdtvalue.state }}</td>
+                <td>{{ sdtvalue.city }}</td>
+                <td> 
+                    <form action="{% url 'oneplace:student_update' sdtvalue.id %}">
+                    {% csrf_token %}
+                      <button type = "submit" class="btn btn-outline-info btn-sm">Update</button>
+                    </form>
+                  </td>
+                  <td> 
+                    <form action="{% url 'oneplace:student_delete' sdtvalue.id %}" method="post">
+                    {% csrf_token %}
+                      <button type = "submit" class="btn btn-outline-danger btn-sm">Delete</button>  
+                    </form>
+                  </td>
+              </tr>
+            {% endfor %}
+
+            </tbody>
+            </table>
+        </div>
+            <!-- END Table -->
+
+ 
+     </div>
+    </div>
+  </div>
+</div>
+
+</div>
+{% load staticfiles %}
+<script src="/static/oneplace/js/customsorttable.js"></script>
+{% endblock %}

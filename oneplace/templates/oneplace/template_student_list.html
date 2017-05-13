@@ -1,0 +1,42 @@
+
+<table class = "table table-responsive table-striped">
+  <thead>
+    <tr>
+      <th>Profile Pic</th>
+      <th>Student First Name</th>
+      <th>Student Last Name</th>
+      <th>Address</th>
+      <th>Zip Code</th>
+      <th>State</th>
+      <th>City</th>
+      <th></th>
+      <th></th>
+    </tr>
+  <thead>
+<tbody>
+<tr>
+   {% for sdtvalue in student_Info %}
+  <tr>
+    <td scope="row"><img src="{{ sdtvalue.student_picture.url }}" class="img-responsive" width="100" height="100"></td>
+    <td>{{ sdtvalue.first_name }}</td>
+    <td>{{ sdtvalue.last_name }}</td>
+    <td>{{ sdtvalue.address }}</td>
+    <td>{{ sdtvalue.zip_code }}</td>
+    <td>{{ sdtvalue.state }}</td>
+    <td>{{ sdtvalue.city }}</td>
+    <td> 
+        <form action="{% url 'oneplace:student_update' sdtvalue.id %}">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-info btn-sm">Update</button>
+        </form>
+      </td>
+      <td> 
+        <form action="{% url 'oneplace:student_delete' sdtvalue.id %}" method="post">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-danger btn-sm">Delete</button>  
+        </form>
+      </td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>

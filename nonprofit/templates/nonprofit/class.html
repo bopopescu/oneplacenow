@@ -1,0 +1,26 @@
+ 
+{% extends 'nonprofit/base.html' %}
+{% block body %}
+
+<div class = "container-fluid">
+  <div class="card-deck">
+{% for classvalue in all_Class %}
+    <div class = "col-lg-4 cont_pad">
+      <div class="card">
+        <div class="card-header">
+          <h4>{{ classvalue.class_name }}</h4>
+        </div>
+        <div class="card-block">
+          <p class="lead">{{ classvalue.class_description }}</p>
+          <p> {{ classvalue.start_time }}<br> {{ classvalue.end_time }}</p>
+          <p> Maximum Capacity: {{ classvalue.class_capacity }}</p>  
+        </div>
+      <a href="#" class="btn btn-primary">View Enrollment</a>
+      </div>
+    </div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
+
+

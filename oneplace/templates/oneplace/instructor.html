@@ -1,0 +1,57 @@
+
+{% extends 'oneplace/base.html' %}
+{% block title %}All Instructors{% endblock %}
+{% block body %}
+<div class = "container-fluid">
+<h3>Here are all the Instructors in the Database</h3>
+<h4>Total Instructors: {{ instructorCount }}</h4>
+<a href="{% url 'oneplace:instructor_add' %}" class="btn btn-primary btn active classbtnadd">Add Instructor</a>
+<table class = " table table-responsive table-striped" id ="tablesort">
+  <thead>
+    <tr>
+      <th onclick="sortTable(0)" class="nicehover">Profile Pic</th>
+      <th onclick="sortTable(1)" class="nicehover">Instructor First Name</th>
+      <th onclick="sortTable(2)" class="nicehover">Instructor Last Name</th>
+      <th onclick="sortTable(3)" class="nicehover">Address</th>
+      <th onclick="sortTable(4)" class="nicehover">Zip Code</th>
+      <th onclick="sortTable(5)" class="nicehover">State</th>
+      <th onclick="sortTable(6)" class="nicehover">City</th>
+      <th onclick="sortTable(7)" class="nicehover">Rate</th>
+      <th></th>
+      <th></th>
+    </tr>
+  <thead>
+<tbody>
+
+   {% for instrvalue in instructor_Info %}
+  <tr>
+    <td><img src="{{ instrvalue.instructor_picture.url }}" class="img-responsive" width="75" height="75"></td>
+    <td>{{ instrvalue.first_name }}</td>
+    <td>{{ instrvalue.last_name }}</td>
+    <td>{{ instrvalue.address }}</td>
+    <td>{{ instrvalue.zip_code }}</td>
+    <td>{{ instrvalue.state }}</td>
+    <td>{{ instrvalue.city }}</td>
+    <td>${{ instrvalue.rate }}</td>
+     <td>      
+        <form action="{% url 'oneplace:instructor_update' instrvalue.id %}">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-info btn-sm">Update</button>
+        </form>
+      </td>
+      <td> 
+        <form action="{% url 'oneplace:instructor_delete' instrvalue.id %}" method="post">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-danger btn-sm">Delete</button>  
+        </form>
+      </td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+{% load staticfiles %}
+<script src="/static/oneplace/js/customsorttable.js"></script>
+
+{% endblock %}

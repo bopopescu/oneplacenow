@@ -1,0 +1,47 @@
+{% extends 'nonprofit/base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+<div class="jumbotron">
+    <div class="container tsquare">
+        <h1>OnePlace</h1>
+        <p class="lead">Welcome to OnePlace. The site where you can set up a group or company and track events, classes, generate reports, and take donations</p>   
+    </div>
+</div>
+
+<div class="container">
+    <div class="card-deck">
+        <div class = "col-md-4">
+            <div class="card carddown">
+                <img class="card-img-top img-fluid" src="../../static/nonprofit/images/class.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Classes</h4>
+                    <p class="card-text">View List of available Classes</p>
+                    <a href="#" class="btn btn-primary">Class List</a>
+                  </div>
+            </div>
+        </div>
+        <div class = "col-md-4">
+            <div class="card carddown">
+                <img class="card-img-top img-fluid" src="../../static/nonprofit/images/report.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Reports</h4>
+                    <p class="card-text">Check out the reporting features </p>
+                    <a href="#" class="btn btn-primary">Available Reports</a>
+                  </div>
+            </div>
+        </div>
+        <div class ="col-md-4">
+            <div class="card carddown">
+                <img class="card-img-top img-fluid h-50 d-inline-block" src="../../static/nonprofit/images/jar.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Donations</h4>
+                    <p class="card-text">Donate to a nonprofit today</p>
+                    <a href="#" class="btn btn-primary">Donate Today</a>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

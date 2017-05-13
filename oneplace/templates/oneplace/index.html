@@ -1,0 +1,44 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}Welcome to OnePlace{% endblock %}
+{% block body %}
+<div class="jumbotron">
+    <div class="container tsquare">
+        <h1>OnePlace</h1>
+        <p class="lead">Welcome to OnePlace. The site for Brooklyn Conservatory of Music to track events, classes, students, and <br> generating reports. </p>   
+    </div>
+</div>
+<div class="container">
+    <div class="card-deck">
+        <div class = "col-md-4">
+            <div class="card carddown">
+                <img class="card-img-top img-fluid" src="../../static/oneplace/images/class.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Classes</h4>
+                    <p class="card-text">View List of available Classes</p>
+                    <a href="{% url 'oneplace:lesson_table' %}" class="btn btn-primary">Class List</a>
+                  </div>
+            </div>
+        </div>
+        <div class = "col-md-4">
+            <div class="card carddown">
+                <img class="card-img-top img-fluid" src="../../static/oneplace/images/report.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Reports</h4>
+                    <p class="card-text">Check out the reporting features </p>
+                    <a href="{% url 'oneplace:chart' %}" class="btn btn-primary">Available Reports</a>
+                  </div>
+            </div>
+        </div>
+        <div class ="col-md-4">
+            <div class="card carddown">
+                <img class="card-img-top img-fluid" src="../../static/oneplace/images/clock.jpg" alt="Card image cap">
+                  <div class="card-block">
+                    <h4 class="card-title">Calendar</h4>
+                    <p class="card-text">View all scheduled classes</p>
+                    <a href="{% url 'oneplace:calendar' %}" class="btn btn-primary">View Calendar</a>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

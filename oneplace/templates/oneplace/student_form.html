@@ -1,0 +1,30 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}Add Student{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class = "row">
+		<div class="col-sm-12 col-md-6">
+			<div class="card">
+	  			<div class="card-header"> 
+	  				Add a Student
+	  			</div>
+	  			<div class="card-block">
+	    			<h4 class="card-title">Please Complete Form</h4>
+	    			<p class="card-text">This will add a new Student to the Database</p>
+	    			<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+	    		    {% csrf_token %}
+	    		    {% include 'oneplace/template_form.html' %}
+	    		    <div class="form-group">
+	    		    	<div class="col-sm-offset-2 col-sm-10 col-md-9">
+	    		    		<button type="submit" class="btn btn-success">Submit</button>
+	    		    	</div>	
+	    		    </div>
+	    		    </form> 	
+	    		   </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

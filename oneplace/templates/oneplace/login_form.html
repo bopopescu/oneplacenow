@@ -1,0 +1,35 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class = "row">
+		<div class="col-sm-12 col-md-6 offset-md-3">
+			<div class="card">
+	  			<div class="card-header"> 
+	  				Returning User
+	  			</div>
+	  			<div class="card-block">
+	    			<h4 class="card-title">Please Complete Form</h4>
+	    			<p class="card-text">Welcome to OnePlace</p>
+	    			{% if login_Error %}
+		    			<div class="alert alert-danger" role="alert"> 
+		    				<strong> Error: </strong>Either your Username or Password was typed incorrectly or your account does not exists.<br>
+		    				Please Try Again:
+	    				</div> 
+	    			{% endif %}
+	    			<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+	    		    {% csrf_token %}
+	    		    {% include 'oneplace/template_form.html' %}
+	    		    <div class="form-group">
+	    		    	<div class="col-sm-offset-2 col-sm-10 col-md-9">
+	    		    		<button type="submit" class="btn btn-success">Login</button>
+	    		    	</div>	
+	    		    </div>
+	    		    </form> 	
+	    		   </div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

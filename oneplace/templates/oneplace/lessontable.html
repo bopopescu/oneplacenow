@@ -1,0 +1,72 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}View Classes{% endblock %}
+{% block body %}
+<div class = "container-fluid">
+<a href="{% url 'oneplace:lesson_add' %}" class="btn btn-primary btn active classbtnadd">Add Class</a>
+<div class='importbtn'>
+    <div class="fileUpload">
+    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data" id="formimport">
+  {% csrf_token %}
+  {% for field in form %}
+    {{ form }}
+    {% endfor %}
+    <!-- <input  name="submit" value="Upload" /> -->
+  </form>
+    </div>
+</div>
+
+
+  <div class="card lessontable">
+    <table class="table table-hover" id="tablesort">
+      <thead>
+        <tr>
+          <th >Class Name</th>
+          <th onclick="sortTable(1)" class="nicehover">Class Description</th>
+          <th>Class Capacity</th>
+          <th onclick="sortTable(3)" class="nicehover">Start Time </th>
+          <th onclick="sortTable(4)" class="nicehover">End Time</th>
+          <th onclick="sortTable(5)" class="nicehover">Level</th>
+          <th onclick="sortTable(6)" class="nicehover">Room</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for lesson in lesson_all %}
+        <tr>
+          <td><a href="{% url 'oneplace:class_enrollment' lesson.id %}" >{{ lesson.class_name }}</a></td>
+          <td>{{ lesson.class_description }}</td>
+          <td>{{ lesson.class_capacity }}</td>
+          <td>{{ lesson.start_time }}</td>
+          <td>{{ lesson.end_time }}</td>
+          <td>{{ lesson.level }}</td>
+          <td>{{ lesson.room_location }}</td>
+          <td> 
+        <form action="{% url 'oneplace:lesson_update' lesson.id %}">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-info btn-sm">Update</button>
+        </form>
+      </td>
+      <td> 
+        <form action="{% url 'oneplace:lesson_delete_list' lesson.id %}" method="post">
+        {% csrf_token %}
+          <button type = "submit" class="btn btn-outline-danger btn-sm">Delete</button>  
+        </form>
+      </td>
+        </tr> 
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% load staticfiles %}
+<script src="/static/oneplace/js/customsorttable.js"></script>
+<script type="text/javascript">
+  document.getElementById("id_file").onchange = function() {
+  document.getElementById("formimport").submit();
+}
+</script>
+{% endblock %}
+
+
+
+
+

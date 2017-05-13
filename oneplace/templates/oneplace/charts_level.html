@@ -1,0 +1,78 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}Welcome to OnePlace{% endblock %}
+{% block body %}
+ 
+   
+<div class = "col-md-10 offset-md-1">
+        <div class="card">
+          <div class="card-header">
+            Levels
+          </div>
+          <div class="card-block"> 
+            <div id="level" style="width:100%; height:400px;"></div>   
+            <a href="{% url 'oneplace:chart' %}" class="btn btn-primary">Full View</a>
+          </div>
+        </div>
+    </div>
+
+{% load staticfiles %}
+
+<script src="{% static 'oneplace/highchart5.0.7/highcharts.js' %}"></script>
+<script type="text/javascript">
+$(function () {
+
+    // Radialize the colors
+    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+        return {
+            radialGradient: {
+                cx: 0.5,
+                cy: 0.3,
+                r: 0.7
+            },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+
+    // Build the chart
+    Highcharts.chart('level', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Class Count by Level'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: ' <b>{point.name}</b>:<b> Total: {point.y:.f} <br> </b> Percent:  {point.percentage:.1f} % ',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'percentage by level',
+            data: [
+            {% for levelCount in levelCount %}
+                { name: '{{ levelCount.level__level_name }}', y: {{ levelCount.levelcount }} },
+            {% endfor %}
+            ]
+        }]
+    });
+});
+        </script>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'oneplace/base.html' %}
+{% block title %}View Classes{% endblock %}
+{% block body %}
+<div class = "container-fluid">
+<div class = "col-lg-4 lesson">
+<a href="{% url 'oneplace:lesson_add' %}" class="btn btn-primary btn-lg active classbtnadd">Add Class</a>
+</div>
+  <div class="card-deck">
+{% for lessonvalue in lesson_all %}
+    <div class = "col-lg-4 cont_pad" >
+      <div class="card cardspec">
+      
+      <div class = "col-lg-4 offset-lg-8">
+       <form method="" action="{% url 'oneplace:lesson_update' lessonvalue.id %}">
+              {% csrf_token %}
+                <button type ="submit" id = "btnupdate" class="btn btn-outline-info btn-sm ">Update</button>
+        </form>
+      </div>
+          <div class = "col-lg-4 offset-lg-8">
+       <form method="post" id = "btndelete"  action="{% url 'oneplace:lesson_delete' lessonvalue.id %}">
+              {% csrf_token %}
+                <button type = "submit" class="btn btn-outline-danger btn-sm">Delete</button>
+          </form>
+        </div> 
+        
+        <div class="card-header">
+          <h5 class ="col-lg-10" >
+          {{ lessonvalue.class_name }} 
+          </h5>
+        </div>
+        <div class="card-block">
+          <p class="lead">{{ lessonvalue.class_description }}</p>
+          <p>Start Time: {{ lessonvalue.start_time }}<br>End Time: {{ lessonvalue.end_time }}</p>
+          <p> Maximum Capacity: {{ lessonvalue.class_capacity }}</p>
+          <p> Room: {{lessonvalue.room_location}} </p>  
+        </div>
+      <a href="{% url 'oneplace:class_enrollment' lessonvalue.id %}" class="btn btn-primary">View Enrollment</a>
+      </div>
+    </div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
+
+
+
+
+
